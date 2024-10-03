@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Schedule</title>
+    
+    <style>
+        /* Global reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #5a5a5a;
+        }
+
+        /* Days button container */
+        .days-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .days-container button {
+             margin: 0 10px; /* Adjust this value for spacing between buttons */
+        }
+
+        /* Button styling */
+        button {
+            padding: 12px 18px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:focus {
+            outline: none;
+            background-color: #3e8e41;
+        }
+
+        /* Schedule box styling */
+        .schedule {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            grid-template-rows: repeat(14, auto); /* Flexible heights for each row */
+            gap: 10px;
+            text-align: center;
+        }
+
+        .schedule-grid div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        /* Time labels on the left */
+        .time-slot {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        /* Workout slots */
+        .workout-slot {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 14px;
+            text-align: left;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        /* Transition (blank) slots */
+        .blank-slot {
+            background-color: #d3d3d3;
+        }
+
+        .workout-details {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .workout-section {
+            margin-bottom: 15px; /* Add spacing between sections */
+        }
+
+        .workout-section strong {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .details-bar,
+        .time-bar {
+            width: 100%; /* Full width of the container */
+            height: 3px; /* Height of the bar */
+            background-color: #ccc; /* Color of the bar */
+            margin-bottom: 15px; /* Space below the bar */
+        }
+
+        .class-details {
+            font-size: 0.9em; /* Shrink the font for class details */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Weekly Workout Schedule</h1>
+
+    <div class="days-container">
+        <button onclick="showSchedule('Sunday')">Sunday</button>
+        <button onclick="showSchedule('Monday')">Monday</button>
+        <button onclick="showSchedule('Tuesday')">Tuesday</button>
+        <button onclick="showSchedule('Wednesday')">Wednesday</button>
+        <button onclick="showSchedule('Thursday')">Thursday</button>
+        <button onclick="showSchedule('Friday')">Friday</button>
+        <button onclick="showSchedule('Saturday')">Saturday</button>
+    </div>
+
+    <div class="schedule" id="schedule">
+        <h2>Workout Details</h2>
+        <div class="details-bar"></div> <!-- Horizontal bar for Workout Details -->
+        <!-- The workout schedule grid for the selected day will appear here -->
+        <h2>Time of Classes</h2>
+        <div class="time-bar"></div> <!-- Horizontal bar for Class Times -->
+        <p>Select a day to view the workout schedule.</p>
+    </div>
+
+    <script>
+        // Data for each day's workout schedule with details and time ranges
+        const schedules = {
+            Sunday: [
+                { time: '8:00 AM - 9:00 AM', activity: {
+                    warmup: '400m Run',
+                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest in between',
+                    workout: '20 min AMRAP: 10 burpees, 15 box jumps, 20 wallballs'
+                }},
+                { time: '9:30 AM - 10:30 AM', activity: {
+                    warmup: 'Light jogging',
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'EMOM for 15 min: 12 Push-ups, 15 Air Squats'
+                }},
+                { time: '11:00 AM - 12:00 PM', activity: {
+                    warmup: 'Dynamic stretching',
+                    strength: 'Power Cleans, 4 sets of 5 reps',
+                    workout: '4 rounds for time: 20 Wallballs, 15 Push-ups, 10 Pull-ups'
+                }},
+                { time: '1:00 PM - 2:00 PM', activity: {
+                    warmup: 'Row 500 meters',
+                    strength: 'Strict Press, 4 sets of 6 reps',
+                    workout: '21-15-9: Thrusters, Box Jumps'
+                }},
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Jump rope for 5 minutes',
+                    strength: 'Bench Press, 5 sets of 5 reps',
+                    workout: 'AMRAP 20 min: 15 Kettlebell Swings, 10 Lunges, 20 Sit-ups'
+                }}
+            ],
+            Monday: [
+                { time: '8:00 AM - 9:00 AM', activity: {
+                    warmup: '200m Run',
+                    strength: 'Deadlifts, 5 sets of 3 reps',
+                    workout: '20 min AMRAP: 15 box jumps, 10 cleans, 20 sit-ups'
+                }},
+                { time: '9:30 AM - 10:30 AM', activity: {
+                    warmup: 'Row 1000 meters',
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'EMOM for 15 min: 10 wall balls, 12 push-ups'
+                }},
+                { time: '11:00 AM - 12:00 PM', activity: {
+                    warmup: 'Dynamic stretching',
+                    strength: 'Front Squats, 3 sets of 10 reps',
+                    workout: '5 rounds: 12 thrusters, 12 burpees'
+                }},
+                { time: '1:00 PM - 2:00 PM', activity: {
+                    warmup: 'Jogging for 10 minutes',
+                    strength: 'Shoulder Press, 5 sets of 5 reps',
+                    workout: '15 min AMRAP: 20 kettlebell swings, 15 sit-ups, 10 box jumps'
+                }},
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Jump rope 3 minutes',
+                    strength: 'Bench Press, 4 sets of 6 reps',
+                    workout: 'For time: 20 Push-ups, 30 Air Squats, 400m Run'
+                }}
+            ],
+            // Add similar structures for other days...
+        };
+
+        // Function to display the schedule based on the selected day
+        function showSchedule(day) {
+            const scheduleDiv = document.getElementById('schedule');
+            const daySchedule = schedules[day] || [];
+            
+            let gridHTML = '<div class="schedule-grid">';
+            gridHTML += '<div class="time-slot">Time</div><div class="workout-slot">Classes</div>'; // Headers for Time and Classes
+
+            // Loop through daySchedule to generate time and activity slots
+            daySchedule.forEach(slot => {
+                gridHTML += `<div class="time-slot">${slot.time}</div>`;
+                gridHTML += `<div class="workout-slot">
+                    <div class="workout-details">
+                        <div class="workout-section"><strong>Warm-up:</strong> ${slot.activity.warmup}</div>
+                        <div class="workout-section"><strong>Strength:</strong> ${slot.activity.strength}</div>
+                        <div class="workout-section"><strong>Workout:</strong> ${slot.activity.workout}</div>
+                    </div>
+                </div>`;
+            });
+
+            // Fill blank slots if there are any unfilled time slots
+            const totalSlots = 5; // Change this number to match total time slots for each day
+            for (let i = daySchedule.length; i < totalSlots; i++) {
+                gridHTML += `<div class="time-slot">-</div>`;
+                gridHTML += `<div class="blank-slot"></div>`;
+            }
+
+            gridHTML += '</div>';
+            scheduleDiv.innerHTML = gridHTML;
+        }
+    </script>
+</body>
+</html>
