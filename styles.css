@@ -1,0 +1,46 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* Remove default margin */
+    background-color: #f0f0f5;
+    color: #333;
+    padding: 20px;
+}
+
+.site-heading{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #5a5a5a;
+}
+
+/* Navigation bar styling */
+.navbar {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center the links */
+    padding: 10px 0; /* Add some padding to the navbar */
+}
+
+.navbar a {
+    display: inline-block; /* Change to inline-block for button effect */
+    color: white;
+    text-align: center;
+    padding: 10px 20px; /* Add padding for button size */
+    margin: 0 10px; /* Add margin between buttons */
+    text-decoration: none;
+    background-color: rgb(175, 40, 40); /* Button background color */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 5px 5px 5px white;
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.navbar a:hover {
+    background-color: rgb(130, 28, 28); /* Darker shade on hover */
+}
+
+.navbar a.active {
+    background-color: rgb(130, 28, 28); /* Same color as hover */
+    color: white; /* Ensure text color is white */
+    pointer-events: none; /* Optional: Disable clicking on the active link */
+}
+
