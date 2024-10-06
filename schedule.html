@@ -4,139 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Schedule</title>
-    
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
     <style>
-        /* Global reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f5;
-            color: #333;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
             padding: 20px;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 20px;
-            color: #5a5a5a;
         }
 
-        /* Days button container */
-        .days-container {
+        .buttons {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
-        }
-        .days-container button {
-             margin: 0 10px; /* Adjust this value for spacing between buttons */
+            margin-bottom: 20px;
         }
 
-        /* Button styling */
         button {
-            padding: 12px 18px;
-            background-color: #4CAF50;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #007bff;
+            color: white;
             border: none;
             border-radius: 5px;
-            color: white;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 16px;
         }
 
         button:hover {
-            background-color: #45a049;
-        }
-
-        button:focus {
-            outline: none;
-            background-color: #3e8e41;
-        }
-
-        /* Schedule box styling */
-        .schedule {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #0056b3;
         }
 
         .schedule-grid {
             display: grid;
-            grid-template-columns: 1fr 3fr;
-            grid-template-rows: repeat(14, auto); /* Flexible heights for each row */
+            grid-template-columns: 1fr 5fr 1fr 1fr; /*Time, Activity, Instructor, Occupancy*/
             gap: 10px;
-            text-align: center;
-        }
-
-        .schedule-grid div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 1px solid #ccc;
             padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 18px; /* Larger font size */
         }
 
-        /* Time labels on the left */
         .time-slot {
-            background-color: #f0f0f0;
+            background-color: #f1f1f1;
             font-weight: bold;
-        }
-
-        /* Workout slots */
-        .workout-slot {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 14px;
-            text-align: left;
-            padding: 15px;
+            padding: 1px; /* Increased padding for better spacing */
+            text-align: center;
+            border: 1px solid #ddd;
             border-radius: 5px;
         }
 
-        /* Transition (blank) slots */
-        .blank-slot {
-            background-color: #d3d3d3;
+        .workout-slot {
+            padding: 15px; /* Increased padding for better spacing */
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
         .workout-details {
-            font-size: 14px;
-            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between sections */
         }
 
         .workout-section {
-            margin-bottom: 15px; /* Add spacing between sections */
+            font-size: 16px; /* Slightly smaller font size for section headers */
         }
 
-        .workout-section strong {
-            display: block;
-            font-size: 15px;
-            margin-bottom: 5px;
-        }
-
-        .details-bar,
-        .time-bar {
-            width: 100%; /* Full width of the container */
-            height: 3px; /* Height of the bar */
-            background-color: #ccc; /* Color of the bar */
-            margin-bottom: 15px; /* Space below the bar */
-        }
-
-        .class-details {
-            font-size: 0.9em; /* Shrink the font for class details */
+        .details-bar {
+            height: 2px;
+            background-color: #007bff;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
+    <!-- large heading -->
+    <h1 class="site-heading">GymBros!</h1>
 
+    <!-- navigation bar -->
+    <div class="navbar">
+        <a href="index.html" class="active">Home</a>
+        <a href="meet_coaches.html">Meet our coaches!</a>
+        <a href="join_now.html">Join Now!</a>
+        <a href="schedule.html">Workout Schedule</a>
+    </div>
     <h1>Weekly Workout Schedule</h1>
-
-    <div class="days-container">
+    <div class="buttons">
         <button onclick="showSchedule('Sunday')">Sunday</button>
         <button onclick="showSchedule('Monday')">Monday</button>
         <button onclick="showSchedule('Tuesday')">Tuesday</button>
@@ -145,106 +103,279 @@
         <button onclick="showSchedule('Friday')">Friday</button>
         <button onclick="showSchedule('Saturday')">Saturday</button>
     </div>
-
-    <div class="schedule" id="schedule">
-        <h2>Workout Details</h2>
-        <div class="details-bar"></div> <!-- Horizontal bar for Workout Details -->
-        <!-- The workout schedule grid for the selected day will appear here -->
-        <h2>Time of Classes</h2>
-        <div class="time-bar"></div> <!-- Horizontal bar for Class Times -->
-        <p>Select a day to view the workout schedule.</p>
-    </div>
+    <div id="schedule"></div>
 
     <script>
-        // Data for each day's workout schedule with details and time ranges
         const schedules = {
             Sunday: [
                 { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '400m Run',
-                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest in between',
-                    workout: '20 min AMRAP: 10 burpees, 15 box jumps, 20 wallballs'
-                }},
+                    warmup: '500m Row',
+                    strength: 'Back Squat, 5 sets of 5 reps',
+                    workout: '3 rounds for time: 15 Thrusters, 15 Pull-ups'
+                }, instructor: 'John Doe', occupancy: '10/20' },
                 { time: '9:30 AM - 10:30 AM', activity: {
                     warmup: 'Light jogging',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'EMOM for 15 min: 12 Push-ups, 15 Air Squats'
-                }},
+                    strength: 'Bench Press, 4 sets of 6 reps',
+                    workout: '20 min AMRAP: 10 Box Jumps, 15 Kettlebell Swings'
+                }, instructor: 'John Doe', occupancy: '10/20' },
                 { time: '11:00 AM - 12:00 PM', activity: {
                     warmup: 'Dynamic stretching',
-                    strength: 'Power Cleans, 4 sets of 5 reps',
-                    workout: '4 rounds for time: 20 Wallballs, 15 Push-ups, 10 Pull-ups'
-                }},
+                    strength: 'Deadlift, 5 sets of 3 reps',
+                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                }, instructor: 'John Doe', occupancy: '10/20' },
                 { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Strict Press, 4 sets of 6 reps',
-                    workout: '21-15-9: Thrusters, Box Jumps'
-                }},
-                { time: '3:30 PM - 4:30 PM', activity: {
                     warmup: 'Jump rope for 5 minutes',
-                    strength: 'Bench Press, 5 sets of 5 reps',
-                    workout: 'AMRAP 20 min: 15 Kettlebell Swings, 10 Lunges, 20 Sit-ups'
-                }}
+                    strength: 'Shoulder Press, 5 sets of 5 reps',
+                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                }, instructor: 'John Doe', occupancy: '10/20' },
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Row 500 meters',
+                    strength: 'Squat Clean, 4 sets of 4 reps',
+                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                }, instructor: 'John Doe', occupancy: '10/20' }
             ],
             Monday: [
                 { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '200m Run',
-                    strength: 'Deadlifts, 5 sets of 3 reps',
-                    workout: '20 min AMRAP: 15 box jumps, 10 cleans, 20 sit-ups'
+                    warmup: '300m Run',
+                    strength: 'Front Squats, 5 sets of 5 reps',
+                    workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
                 }},
                 { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Row 1000 meters',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'EMOM for 15 min: 10 wall balls, 12 push-ups'
+                    warmup: 'Jumping jacks',
+                    strength: 'Deadlifts, 4 sets of 6 reps',
+                    workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
                 }},
                 { time: '11:00 AM - 12:00 PM', activity: {
                     warmup: 'Dynamic stretching',
-                    strength: 'Front Squats, 3 sets of 10 reps',
-                    workout: '5 rounds: 12 thrusters, 12 burpees'
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
                 }},
                 { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Jogging for 10 minutes',
-                    strength: 'Shoulder Press, 5 sets of 5 reps',
-                    workout: '15 min AMRAP: 20 kettlebell swings, 15 sit-ups, 10 box jumps'
+                    warmup: 'Row 500 meters',
+                    strength: 'Bench Press, 4 sets of 5 reps',
+                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
                 }},
                 { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Jump rope 3 minutes',
-                    strength: 'Bench Press, 4 sets of 6 reps',
-                    workout: 'For time: 20 Push-ups, 30 Air Squats, 400m Run'
+                    warmup: 'Jump rope for 5 minutes',
+                    strength: 'Power Cleans, 5 sets of 3 reps',
+                    workout: '21-15-9: Thrusters, Box Jumps'
                 }}
             ],
-            // Add similar structures for other days...
+            Tuesday: [
+                { time: '8:00 AM - 9:00 AM', activity: {
+                    warmup: '400m Run',
+                    strength: 'Squat Clean, 5 sets of 3 reps',
+                    workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
+                }},
+                { time: '9:30 AM - 10:30 AM', activity: {
+                    warmup: 'Light jogging',
+                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
+                    workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
+                }},
+                { time: '11:00 AM - 12:00 PM', activity: {
+                    warmup: 'Dynamic stretching',
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                }},
+                { time: '1:00 PM - 2:00 PM', activity: {
+                    warmup: 'Row 500 meters',
+                    strength: 'Shoulder Press, 5 sets of 5 reps',
+                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                }},
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Jump rope for 5 minutes',
+                    strength: 'Bench Press, 4 sets of 6 reps',
+                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                }}
+            ],
+            Wednesday: [
+                { time: '8:00 AM - 9:00 AM', activity: {
+                    warmup: '400m Run',
+                    strength: 'Squat Clean, 5 sets of 3 reps',
+                    workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
+                }},
+                { time: '9:30 AM - 10:30 AM', activity: {
+                    warmup: 'Light jogging',
+                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
+                    workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
+                }},
+                { time: '11:00 AM - 12:00 PM', activity: {
+                    warmup: 'Dynamic stretching',
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                }},
+                { time: '1:00 PM - 2:00 PM', activity: {
+                    warmup: 'Row 500 meters',
+                    strength: 'Shoulder Press, 5 sets of 5 reps',
+                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                }},
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Jump rope for 5 minutes',
+                    strength: 'Bench Press, 4 sets of 6 reps',
+                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                }}
+            ],
+            Thursday: [
+                { time: '8:00 AM - 9:00 AM', activity: {
+                    warmup: '300m Run',
+                    strength: 'Front Squats, 5 sets of 5 reps',
+                    workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
+                }},
+                { time: '9:30 AM - 10:30 AM', activity: {
+                    warmup: 'Jumping jacks',
+                    strength: 'Deadlifts, 4 sets of 6 reps',
+                    workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
+                }},
+                { time: '11:00 AM - 12:00 PM', activity: {
+                    warmup: 'Dynamic stretching',
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
+                }},
+                { time: '1:00 PM - 2:00 PM', activity: {
+                    warmup: 'Row 500 meters',
+                    strength: 'Bench Press, 4 sets of 5 reps',
+                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                }},
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Jump rope for 5 minutes',
+                    strength: 'Power Cleans, 5 sets of 3 reps',
+                    workout: '21-15-9: Thrusters, Box Jumps'
+                }}
+            ],
+            Friday: [
+                { time: '8:00 AM - 9:00 AM', activity: {
+                    warmup: '400m Run',
+                    strength: 'Squat Clean, 5 sets of 3 reps',
+                    workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
+                }},
+                { time: '9:30 AM - 10:30 AM', activity: {
+                    warmup: 'Light jogging',
+                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
+                    workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
+                }},
+                { time: '11:00 AM - 12:00 PM', activity: {
+                    warmup: 'Dynamic stretching',
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                }},
+                { time: '1:00 PM - 2:00 PM', activity: {
+                    warmup: 'Row 500 meters',
+                    strength: 'Shoulder Press, 5 sets of 5 reps',
+                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                }},
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Jump rope for 5 minutes',
+                    strength: 'Bench Press, 4 sets of 6 reps',
+                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                }}
+            ],
+            Saturday: [
+                { time: '8:00 AM - 9:00 AM', activity: {
+                    warmup: '300m Run',
+                    strength: 'Front Squats, 5 sets of 5 reps',
+                    workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
+                }},
+                { time: '9:30 AM - 10:30 AM', activity: {
+                    warmup: 'Jumping jacks',
+                    strength: 'Deadlifts, 4 sets of 6 reps',
+                    workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
+                }},
+                { time: '11:00 AM - 12:00 PM', activity: {
+                    warmup: 'Dynamic stretching',
+                    strength: 'Back Squat, 4 sets of 8 reps',
+                    workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
+                }},
+                { time: '1:00 PM - 2:00 PM', activity: {
+                    warmup: 'Row 500 meters',
+                    strength: 'Bench Press, 4 sets of 5 reps',
+                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                }},
+                { time: '3:30 PM - 4:30 PM', activity: {
+                    warmup: 'Jump rope for 5 minutes',
+                    strength: 'Power Cleans, 5 sets of 3 reps',
+                    workout: '21-15-9: Thrusters, Box Jumps'
+                }}
+            ]
         };
 
-        // Function to display the schedule based on the selected day
         function showSchedule(day) {
             const scheduleDiv = document.getElementById('schedule');
-            const daySchedule = schedules[day] || [];
-            
-            let gridHTML = '<div class="schedule-grid">';
-            gridHTML += '<div class="time-slot">Time</div><div class="workout-slot">Classes</div>'; // Headers for Time and Classes
+            scheduleDiv.innerHTML = '';
 
-            // Loop through daySchedule to generate time and activity slots
-            daySchedule.forEach(slot => {
-                gridHTML += `<div class="time-slot">${slot.time}</div>`;
-                gridHTML += `<div class="workout-slot">
-                    <div class="workout-details">
-                        <div class="workout-section"><strong>Warm-up:</strong> ${slot.activity.warmup}</div>
-                        <div class="workout-section"><strong>Strength:</strong> ${slot.activity.strength}</div>
-                        <div class="workout-section"><strong>Workout:</strong> ${slot.activity.workout}</div>
-                    </div>
-                </div>`;
+            const grid = document.createElement('div');
+            grid.className = 'schedule-grid';
+
+            const headerTime = document.createElement('div');
+            headerTime.className = 'time-slot';
+            headerTime.textContent = 'Time';
+            grid.appendChild(headerTime);
+
+            const headerActivity = document.createElement('div');
+            headerActivity.className = 'time-slot';
+            headerActivity.textContent = 'Activity';
+            grid.appendChild(headerActivity);
+
+            const headerInstructor = document.createElement('div');
+            headerInstructor.className = 'time-slot';
+            headerInstructor.textContent = 'Instructor';
+            grid.appendChild(headerInstructor);
+        
+            const headerOccupancy = document.createElement('div');
+            headerOccupancy.className = 'time-slot';
+            headerOccupancy.textContent = 'Occupancy';
+            grid.appendChild(headerOccupancy);
+
+            // Add the workout slots
+            schedules[day].forEach(slot => {
+                // Time
+                const timeSlot = document.createElement('div');
+                timeSlot.className = 'workout-slot';
+                timeSlot.textContent = slot.time;
+                grid.appendChild(timeSlot);
+
+                // Activity
+                const activitySlot = document.createElement('div');
+                activitySlot.className = 'workout-slot';
+
+                const workoutDetails = document.createElement('div');
+                workoutDetails.className = 'workout-details';
+
+                const warmup = document.createElement('div');
+                warmup.className = 'workout-section';
+                warmup.innerHTML = `<strong>Warmup:</strong> ${slot.activity.warmup}`;
+                workoutDetails.appendChild(warmup);
+
+                const strength = document.createElement('div');
+                strength.className = 'workout-section';
+                strength.innerHTML = `<strong>Strength:</strong> ${slot.activity.strength}`;
+                workoutDetails.appendChild(strength);
+
+                const workout = document.createElement('div');
+                workout.className = 'workout-section';
+                workout.innerHTML = `<strong>Workout:</strong> ${slot.activity.workout}`;
+                workoutDetails.appendChild(workout);
+
+                activitySlot.appendChild(workoutDetails);
+                grid.appendChild(activitySlot);
+
+                // Instructor
+                const instructorSlot = document.createElement('div');
+                instructorSlot.className = 'workout-slot';
+                instructorSlot.textContent = slot.instructor;
+                grid.appendChild(instructorSlot);
+
+                // Occupancy
+                const occupancySlot = document.createElement('div');
+                occupancySlot.className = 'workout-slot';
+                occupancySlot.textContent = slot.occupancy;
+                grid.appendChild(occupancySlot);
             });
 
-            // Fill blank slots if there are any unfilled time slots
-            const totalSlots = 5; // Change this number to match total time slots for each day
-            for (let i = daySchedule.length; i < totalSlots; i++) {
-                gridHTML += `<div class="time-slot">-</div>`;
-                gridHTML += `<div class="blank-slot"></div>`;
-            }
-
-            gridHTML += '</div>';
-            scheduleDiv.innerHTML = gridHTML;
+            scheduleDiv.appendChild(grid);
         }
+
+        // Show Sunday schedule by default
+        showSchedule('Sunday');
     </script>
 </body>
 </html>
