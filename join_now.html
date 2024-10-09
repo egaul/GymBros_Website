@@ -20,5 +20,92 @@
         <div>
             <p>This is the join now page</p>
         </div>
+        <h1>Create an Account and Join Now!</h1>
+        <form id="registrationForm">
+            <label for="firstName">First name:</label>
+            <input type="text" id="firstName" name="firstName" required><br><br>
+            
+            <label for="lastName">Last name:</label>
+            <input type="text" id="lastName" name="lastName" required><br><br>
+            
+            <label for="membershipType">Membership Type:</label>
+            <select id="membershipType" name="membershipType" required>
+                <option value="" disabled selected>Select your membership type</option>
+                <option value="basic">Basic</option>
+                <option value="premium">Premium</option>
+                <option value="vip">VIP</option>
+            </select><br><br>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+    
+            <label for="password">Create password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+    
+            <input type="submit" value="Register">
+        </form>
+
+        <script>
+            // Function to handle form submission
+            document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the values from the form
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const membershipType = document.getElementById('membershipType').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Check if the email already exists in local storage
+            const existingMembers = JSON.parse(localStorage.getItem('users')) || [];
+            const memberExists = existingMembers.some(user => user.email === email);
+
+            if (memberExists) {
+                alert('That email is used by another account. Please use a different email.');
+                return;
+            }
+
+            const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/; //Special character Regex pattern
+
+            let hasSpecialChar = format.test(password); // Storing boolean represeting whether string contains any special characters
+            let hasSpaces = /\s/.test(password); // Storing boolean represeting whether string contains any spaces
+            let hasNumbers = /\d/.test(password); // Storing boolean represeting whether string contains any number
+            
+            // Check if password is at least length 8, contains a digit, no spaces, and at least one special character
+            if (password.length < 8 || !hasNumbers || hasSpaces || !hasSpecialChar){
+                alert('Your password needs to be at least 8 characters long, contains a number, no spaces, and at least one special character.');
+                return;
+            } else{
+                console.log("Tests passed!")
+            }
+
+            // Testing local storage for members
+            if (existingMembers.length != 0) {
+                console.log(existingMembers); // This will log the array of user objects to the console
+            } else {
+                console.log('No members found.');
+            }
+
+            // Create a new user object
+            const newMember = {
+                firstName: firstName,
+                lastName: lastName,
+                membershipType: membershipType,
+                email: email,
+                password: password 
+            };
+
+            // Add the new memeber to the existing memebers array
+            existingMembers.push(newMember);
+            localStorage.setItem('users', JSON.stringify(existingMembers));
+
+            // clear the form after submission
+            document.getElementById('registrationForm').reset();
+
+            // Notify the user
+            alert('Account created successfully!');
+        });
+        </script>
     </body>
 </html>
