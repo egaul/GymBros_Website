@@ -43,3 +43,37 @@ body {
     pointer-events: none; /* Optional: Disable clicking on the active link */
 }
 
+.error-li {
+    color: red;
+    font-weight: bold;
+  }
+
+.correct-li {
+    color: green;
+    font-weight: bold;
+  }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Space above the table */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Border for table cells */
+    padding: 8px; /* Padding inside cells */
+    text-align: left; /* Align text to the left */
+}
+
+th {
+    color: black;
+    background-color: #f2f2f2; /* Light gray background for header */
+    font-weight: bold; /* Bold text for header */
+}
+
+tr:hover {
+    color: white;
+    background-color: rgb(130, 28, 28); /* Highlight row on hover */
+}
+
+
