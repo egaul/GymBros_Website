@@ -5,6 +5,57 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Meet the coaches</title>
         <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+        <style>
+            body {
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+
+            p {
+                font-size: 18px;
+                max-width: 80%;
+                margin-left: auto; 
+                margin-right: auto;
+            }
+
+            h2 {
+                font-size: 40px;
+                color: white;
+                background-color: rgb(175, 40, 40);
+                border: 3px solid black;
+                border-radius: 10px;
+
+            }
+
+            h3 {
+                display: inline-block;
+                font-size: 25px;
+                text-decoration: underline;
+            }
+
+            table {
+                width: 100%;
+                max-width: 90%;
+                margin-left: auto; 
+                margin-right: auto;
+                border-collapse: collapse;
+            }
+
+            td:nth-child(1) {background-color: gray;}
+            td:nth-child(2) {background-color: rgb(211, 211, 211);}
+
+            td {
+                border: 5px solid rgb(44, 44, 44);
+                padding: 10px;
+                vertical-align: top;
+            }
+
+            img {
+                width: 200px;
+                height: 200px;
+                object-fit: cover;
+            }
+        </style>
     </head>
     <body>
         <!-- large heading -->
@@ -18,8 +69,87 @@
             <a href="schedule.html">Workout Schedule</a>
         </div>
         <div>
-            <p>This is the coaches page</p>
-            <p>Testing</p>
+            <h2>Our Coaches</h2>
         </div>
+        <!-- tbody used -->
+        <table><tbody id="OurCoaches"></tbody></table>
+
+
+        <script>
+            //NOTE: Each field is using placeholders. aboutCoach is organized with initials for testing.
+            const coaches = [
+                {
+                    coachName: "Johnny Joestar",
+                    coachImage: "https://images.pexels.com/photos/7218111/pexels-photo-7218111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "guy in orange",
+                    aboutCoach: "I am a coach. I specialize in this activity. -JJ"
+                },
+                {  
+                    coachName: "Diego Brando",
+                    coachImage: "https://images.pexels.com/photos/7218111/pexels-photo-7218111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "guy in orange",
+                    aboutCoach: "I am a coach. I specialize in this activity. -DB"
+                },
+                {
+                    coachName: "Steven Steel",
+                    coachImage: "https://images.pexels.com/photos/7218111/pexels-photo-7218111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "guy in orange",
+                    aboutCoach: "I am a coach. I specialize in this activity. -SS -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Testing margins"
+                },
+                {
+                    coachName: "Enrico Pucci",
+                    coachImage: "https://images.pexels.com/photos/804269/pexels-photo-804269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "Lines on blue",
+                    aboutCoach: "I am a coach. I specialize in this activity. -EP"
+                },
+                {
+                    coachName: "Jolyne Cujoh",
+                    coachImage: "https://images.pexels.com/photos/7218111/pexels-photo-7218111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "guy in orange",
+                    aboutCoach: "I am a coach. I specialize in this activity. -JC"
+                },
+                {
+                    coachName: "Trish Una",
+                    coachImage: "https://images.pexels.com/photos/7218111/pexels-photo-7218111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "guy in orange",
+                    aboutCoach: "I am a coach. I specialize in this activity. -TU"
+                },
+                {
+                    coachName: "Jean Polnareff",
+                    coachImage: "https://images.pexels.com/photos/825947/pexels-photo-825947.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "dog in black and white",
+                    aboutCoach: "I am a coach. I specialize in this activity. -JP"
+                },
+                {
+                    coachName: "Robert Speedwagon",
+                    coachImage: "https://images.pexels.com/photos/7218111/pexels-photo-7218111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                    imageAlt: "guy in orange",
+                    aboutCoach: "I am a coach. I specialize in this activity. -RS"
+                },
+            ]
+
+            //function to displays the Coaches in Coaches
+            function listCoaches(){
+                displayArea = document.getElementById("OurCoaches")
+                displayArea.innerHTML = ""
+
+                //Loop to display coach info
+                for(i = 0; i < coaches.length; i++) {
+                    coach = coaches[i]
+                    displayArea.innerHTML += `
+                        <tr>
+                            <td><img src="${coach.coachImage}" alt="${coach.imageAlt}"></td>
+                            <td>
+                                <h3>${coach.coachName}</h3>
+                                <p>${coach.aboutCoach}</p>
+                            </td>
+                        <tr>
+                     `;
+                }
+            }   
+
+            listCoaches()
+        </script>
+
     </body>
 </html>
