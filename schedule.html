@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,27 +41,31 @@
 
         .schedule-grid {
             display: grid;
-            grid-template-columns: 1fr 5fr 1fr 1fr; /*Time, Activity, Instructor, Occupancy*/
+            grid-template-columns: 1fr 5fr 1fr 1fr;
+            /*Time, Activity, Instructor, Occupancy*/
             gap: 10px;
             border: 1px solid #ccc;
             padding: 10px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            font-size: 18px; /* Larger font size */
+            font-size: 18px;
+            /* Larger font size */
         }
 
         .time-slot {
             background-color: #f1f1f1;
             font-weight: bold;
-            padding: 1px; /* Increased padding for better spacing */
+            padding: 1px;
+            /* Increased padding for better spacing */
             text-align: center;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
 
         .workout-slot {
-            padding: 15px; /* Increased padding for better spacing */
+            padding: 15px;
+            /* Increased padding for better spacing */
             border: 1px solid #ddd;
             border-radius: 5px;
         }
@@ -68,11 +73,13 @@
         .workout-details {
             display: flex;
             flex-direction: column;
-            gap: 10px; /* Space between sections */
+            gap: 10px;
+            /* Space between sections */
         }
 
         .workout-section {
-            font-size: 16px; /* Slightly smaller font size for section headers */
+            font-size: 16px;
+            /* Slightly smaller font size for section headers */
         }
 
         .details-bar {
@@ -80,8 +87,29 @@
             background-color: #007bff;
             margin: 5px 0;
         }
+
+        .sign-in-button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .sign-in-button.grey-out {
+            background-color: grey;
+            cursor: not-allowed;
+        }
+
+        .active-day {
+            background-color: #003f7f;
+            /* Even darker blue */
+            color: white;
+            /* Maintain contrast */
+            font-weight: bold;
+            /* Make the text bold to stand out */
+        }
     </style>
 </head>
+
 <body>
     <!-- large heading -->
     <h1 class="site-heading">GymBros!</h1>
@@ -108,225 +136,304 @@
     <script>
         const schedules = {
             Sunday: [
-                { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '500m Row',
-                    strength: 'Back Squat, 5 sets of 5 reps',
-                    workout: '3 rounds for time: 15 Thrusters, 15 Pull-ups'
-                }, instructor: 'John Doe', occupancy: '10/20' },
-                { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Light jogging',
-                    strength: 'Bench Press, 4 sets of 6 reps',
-                    workout: '20 min AMRAP: 10 Box Jumps, 15 Kettlebell Swings'
-                }, instructor: 'John Doe', occupancy: '10/20' },
-                { time: '11:00 AM - 12:00 PM', activity: {
-                    warmup: 'Dynamic stretching',
-                    strength: 'Deadlift, 5 sets of 3 reps',
-                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
-                }, instructor: 'John Doe', occupancy: '10/20' },
-                { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Jump rope for 5 minutes',
-                    strength: 'Shoulder Press, 5 sets of 5 reps',
-                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
-                }, instructor: 'John Doe', occupancy: '10/20' },
-                { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Squat Clean, 4 sets of 4 reps',
-                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
-                }, instructor: 'John Doe', occupancy: '10/20' }
+                {
+                    time: '8:00 AM - 9:00 AM', activity: {
+                        warmup: '500m Row',
+                        strength: 'Back Squat, 5 sets of 5 reps',
+                        workout: '3 rounds for time: 15 Thrusters, 15 Pull-ups'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '9:30 AM - 10:30 AM', activity: {
+                        warmup: 'Light jogging',
+                        strength: 'Bench Press, 4 sets of 6 reps',
+                        workout: '20 min AMRAP: 10 Box Jumps, 15 Kettlebell Swings'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '11:00 AM - 12:00 PM', activity: {
+                        warmup: 'Dynamic stretching',
+                        strength: 'Deadlift, 5 sets of 3 reps',
+                        workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '1:00 PM - 2:00 PM', activity: {
+                        warmup: 'Jump rope for 5 minutes',
+                        strength: 'Shoulder Press, 5 sets of 5 reps',
+                        workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '3:30 PM - 4:30 PM', activity: {
+                        warmup: 'Row 500 meters',
+                        strength: 'Squat Clean, 4 sets of 4 reps',
+                        workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                }
             ],
             Monday: [
-                { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '300m Run',
-                    strength: 'Front Squats, 5 sets of 5 reps',
-                    workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
-                }},
-                { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Jumping jacks',
-                    strength: 'Deadlifts, 4 sets of 6 reps',
-                    workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
-                }},
-                { time: '11:00 AM - 12:00 PM', activity: {
-                    warmup: 'Dynamic stretching',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
-                }},
-                { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Bench Press, 4 sets of 5 reps',
-                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
-                }},
-                { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Jump rope for 5 minutes',
-                    strength: 'Power Cleans, 5 sets of 3 reps',
-                    workout: '21-15-9: Thrusters, Box Jumps'
-                }}
+                {
+                    time: '8:00 AM - 9:00 AM', activity: {
+                        warmup: '300m Run',
+                        strength: 'Front Squats, 5 sets of 5 reps',
+                        workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '9:30 AM - 10:30 AM', activity: {
+                        warmup: 'Jumping jacks',
+                        strength: 'Deadlifts, 4 sets of 6 reps',
+                        workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '11:00 AM - 12:00 PM', activity: {
+                        warmup: 'Dynamic stretching',
+                        strength: 'Back Squat, 4 sets of 8 reps',
+                        workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '1:00 PM - 2:00 PM', activity: {
+                        warmup: 'Row 500 meters',
+                        strength: 'Bench Press, 4 sets of 5 reps',
+                        workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '3:30 PM - 4:30 PM', activity: {
+                        warmup: 'Jump rope for 5 minutes',
+                        strength: 'Power Cleans, 5 sets of 3 reps',
+                        workout: '21-15-9: Thrusters, Box Jumps'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                }
             ],
             Tuesday: [
-                { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '400m Run',
-                    strength: 'Squat Clean, 5 sets of 3 reps',
-                    workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
-                }},
-                { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Light jogging',
-                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
-                    workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
-                }},
-                { time: '11:00 AM - 12:00 PM', activity: {
-                    warmup: 'Dynamic stretching',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
-                }},
-                { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Shoulder Press, 5 sets of 5 reps',
-                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
-                }},
-                { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Jump rope for 5 minutes',
-                    strength: 'Bench Press, 4 sets of 6 reps',
-                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
-                }}
+                {
+                    time: '8:00 AM - 9:00 AM', activity: {
+                        warmup: '400m Run',
+                        strength: 'Squat Clean, 5 sets of 3 reps',
+                        workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '9:30 AM - 10:30 AM', activity: {
+                        warmup: 'Light jogging',
+                        strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
+                        workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '11:00 AM - 12:00 PM', activity: {
+                        warmup: 'Dynamic stretching',
+                        strength: 'Back Squat, 4 sets of 8 reps',
+                        workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '1:00 PM - 2:00 PM', activity: {
+                        warmup: 'Row 500 meters',
+                        strength: 'Shoulder Press, 5 sets of 5 reps',
+                        workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '3:30 PM - 4:30 PM', activity: {
+                        warmup: 'Jump rope for 5 minutes',
+                        strength: 'Bench Press, 4 sets of 6 reps',
+                        workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                }
             ],
             Wednesday: [
-                { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '400m Run',
-                    strength: 'Squat Clean, 5 sets of 3 reps',
-                    workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
-                }},
-                { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Light jogging',
-                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
-                    workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
-                }},
-                { time: '11:00 AM - 12:00 PM', activity: {
-                    warmup: 'Dynamic stretching',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
-                }},
-                { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Shoulder Press, 5 sets of 5 reps',
-                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
-                }},
-                { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Jump rope for 5 minutes',
-                    strength: 'Bench Press, 4 sets of 6 reps',
-                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
-                }}
+                {
+                    time: '8:00 AM - 9:00 AM', activity: {
+                        warmup: '400m Run',
+                        strength: 'Squat Clean, 5 sets of 3 reps',
+                        workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '9:30 AM - 10:30 AM', activity: {
+                        warmup: 'Light jogging',
+                        strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
+                        workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '11:00 AM - 12:00 PM', activity: {
+                        warmup: 'Dynamic stretching',
+                        strength: 'Back Squat, 4 sets of 8 reps',
+                        workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '1:00 PM - 2:00 PM', activity: {
+                        warmup: 'Row 500 meters',
+                        strength: 'Shoulder Press, 5 sets of 5 reps',
+                        workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '3:30 PM - 4:30 PM', activity: {
+                        warmup: 'Jump rope for 5 minutes',
+                        strength: 'Bench Press, 4 sets of 6 reps',
+                        workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                }
             ],
             Thursday: [
-                { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '300m Run',
-                    strength: 'Front Squats, 5 sets of 5 reps',
-                    workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
-                }},
-                { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Jumping jacks',
-                    strength: 'Deadlifts, 4 sets of 6 reps',
-                    workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
-                }},
-                { time: '11:00 AM - 12:00 PM', activity: {
-                    warmup: 'Dynamic stretching',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
-                }},
-                { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Bench Press, 4 sets of 5 reps',
-                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
-                }},
-                { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Jump rope for 5 minutes',
-                    strength: 'Power Cleans, 5 sets of 3 reps',
-                    workout: '21-15-9: Thrusters, Box Jumps'
-                }}
+                {
+                    time: '8:00 AM - 9:00 AM', activity: {
+                        warmup: '300m Run',
+                        strength: 'Front Squats, 5 sets of 5 reps',
+                        workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '9:30 AM - 10:30 AM', activity: {
+                        warmup: 'Jumping jacks',
+                        strength: 'Deadlifts, 4 sets of 6 reps',
+                        workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '11:00 AM - 12:00 PM', activity: {
+                        warmup: 'Dynamic stretching',
+                        strength: 'Back Squat, 4 sets of 8 reps',
+                        workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '1:00 PM - 2:00 PM', activity: {
+                        warmup: 'Row 500 meters',
+                        strength: 'Bench Press, 4 sets of 5 reps',
+                        workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '3:30 PM - 4:30 PM', activity: {
+                        warmup: 'Jump rope for 5 minutes',
+                        strength: 'Power Cleans, 5 sets of 3 reps',
+                        workout: '21-15-9: Thrusters, Box Jumps'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                }
             ],
             Friday: [
-                { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '400m Run',
-                    strength: 'Squat Clean, 5 sets of 3 reps',
-                    workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
-                }},
-                { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Light jogging',
-                    strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
-                    workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
-                }},
-                { time: '11:00 AM - 12:00 PM', activity: {
-                    warmup: 'Dynamic stretching',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
-                }},
-                { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Shoulder Press, 5 sets of 5 reps',
-                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
-                }},
-                { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Jump rope for 5 minutes',
-                    strength: 'Bench Press, 4 sets of 6 reps',
-                    workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
-                }}
+                {
+                    time: '8:00 AM - 9:00 AM', activity: {
+                        warmup: '400m Run',
+                        strength: 'Squat Clean, 5 sets of 3 reps',
+                        workout: '20 min AMRAP: 15 push-ups, 10 sit-ups, 400m Run'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '9:30 AM - 10:30 AM', activity: {
+                        warmup: 'Light jogging',
+                        strength: 'Deadlift, 5 rounds building to 80% of max, 1 minute rest',
+                        workout: '15 min EMOM: 12 Wall Balls, 12 Kettlebell Swings'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '11:00 AM - 12:00 PM', activity: {
+                        warmup: 'Dynamic stretching',
+                        strength: 'Back Squat, 4 sets of 8 reps',
+                        workout: 'For time: 400m Run, 30 Burpees, 20 Thrusters'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '1:00 PM - 2:00 PM', activity: {
+                        warmup: 'Row 500 meters',
+                        strength: 'Shoulder Press, 5 sets of 5 reps',
+                        workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '3:30 PM - 4:30 PM', activity: {
+                        warmup: 'Jump rope for 5 minutes',
+                        strength: 'Bench Press, 4 sets of 6 reps',
+                        workout: '5 rounds: 15 Push-ups, 10 Pull-ups'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                }
             ],
             Saturday: [
-                { time: '8:00 AM - 9:00 AM', activity: {
-                    warmup: '300m Run',
-                    strength: 'Front Squats, 5 sets of 5 reps',
-                    workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
-                }},
-                { time: '9:30 AM - 10:30 AM', activity: {
-                    warmup: 'Jumping jacks',
-                    strength: 'Deadlifts, 4 sets of 6 reps',
-                    workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
-                }},
-                { time: '11:00 AM - 12:00 PM', activity: {
-                    warmup: 'Dynamic stretching',
-                    strength: 'Back Squat, 4 sets of 8 reps',
-                    workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
-                }},
-                { time: '1:00 PM - 2:00 PM', activity: {
-                    warmup: 'Row 500 meters',
-                    strength: 'Bench Press, 4 sets of 5 reps',
-                    workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
-                }},
-                { time: '3:30 PM - 4:30 PM', activity: {
-                    warmup: 'Jump rope for 5 minutes',
-                    strength: 'Power Cleans, 5 sets of 3 reps',
-                    workout: '21-15-9: Thrusters, Box Jumps'
-                }}
+                {
+                    time: '8:00 AM - 9:00 AM', activity: {
+                        warmup: '300m Run',
+                        strength: 'Front Squats, 5 sets of 5 reps',
+                        workout: '5 rounds for time: 12 Thrusters, 15 Box Jumps'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '9:30 AM - 10:30 AM', activity: {
+                        warmup: 'Jumping jacks',
+                        strength: 'Deadlifts, 4 sets of 6 reps',
+                        workout: '20 min AMRAP: 10 Kettlebell Swings, 10 Burpees, 10 Wall Balls'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '11:00 AM - 12:00 PM', activity: {
+                        warmup: 'Dynamic stretching',
+                        strength: 'Back Squat, 4 sets of 8 reps',
+                        workout: 'For time: 15 Push-ups, 20 Air Squats, 400m Run'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '1:00 PM - 2:00 PM', activity: {
+                        warmup: 'Row 500 meters',
+                        strength: 'Bench Press, 4 sets of 5 reps',
+                        workout: '15 min AMRAP: 10 Clean and Jerks, 15 Air Squats'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                },
+                {
+                    time: '3:30 PM - 4:30 PM', activity: {
+                        warmup: 'Jump rope for 5 minutes',
+                        strength: 'Power Cleans, 5 sets of 3 reps',
+                        workout: '21-15-9: Thrusters, Box Jumps'
+                    }, instructor: 'John Doe', occupancy: '10/20'
+                }
             ]
         };
 
+        let signedInByDay = {}; // Tracks signed-in slots by day
+
         function showSchedule(day) {
             const scheduleDiv = document.getElementById('schedule');
+            const buttonElements = document.querySelectorAll('.buttons button');
             scheduleDiv.innerHTML = '';
 
             const grid = document.createElement('div');
             grid.className = 'schedule-grid';
 
-            const headerTime = document.createElement('div');
-            headerTime.className = 'time-slot';
-            headerTime.textContent = 'Time';
-            grid.appendChild(headerTime);
+            // NEW CODE: Clear active class from all day buttons
+            const dayButtons = document.querySelectorAll('.day-button'); // Make sure to use the correct class for your day buttons
+            dayButtons.forEach(button => {
+                button.classList.remove('active-day'); // Remove active class from all buttons
+            });
 
-            const headerActivity = document.createElement('div');
-            headerActivity.className = 'time-slot';
-            headerActivity.textContent = 'Activity';
-            grid.appendChild(headerActivity);
+            // NEW CODE: Add active class to the currently selected day button
+            const currentButton = document.querySelector(`.day-button[data-day="${day}"]`); // Assuming you have data-day attributes
+            if (currentButton) {
+                currentButton.classList.add('active-day'); // Add active class to the selected button
+            }
 
-            const headerInstructor = document.createElement('div');
-            headerInstructor.className = 'time-slot';
-            headerInstructor.textContent = 'Instructor';
-            grid.appendChild(headerInstructor);
-        
-            const headerOccupancy = document.createElement('div');
-            headerOccupancy.className = 'time-slot';
-            headerOccupancy.textContent = 'Occupancy';
-            grid.appendChild(headerOccupancy);
+            // Ensure the day has its own tracking set
+            if (!signedInByDay[day]) {
+                signedInByDay[day] = new Set();
+            }
 
-            // Add the workout slots
-            schedules[day].forEach(slot => {
+            // Create headers
+            const headers = ['Time', 'Activity', 'Instructor', 'Occupancy'];
+            headers.forEach(headerText => {
+                const header = document.createElement('div');
+                header.className = 'time-slot';
+                header.textContent = headerText;
+                grid.appendChild(header);
+            });
+
+            // Iterate over the schedule for the given day
+            schedules[day].forEach((slot, index) => {
                 // Time
                 const timeSlot = document.createElement('div');
                 timeSlot.className = 'workout-slot';
@@ -336,26 +443,12 @@
                 // Activity
                 const activitySlot = document.createElement('div');
                 activitySlot.className = 'workout-slot';
+                const workoutDetails = `
+                <div class="workout-section"><strong>Warmup:</strong> ${slot.activity.warmup}</div>
+                <div class="workout-section"><strong>Strength:</strong> ${slot.activity.strength}</div>
+                <div class="workout-section"><strong>Workout:</strong> ${slot.activity.workout}</div>`;
 
-                const workoutDetails = document.createElement('div');
-                workoutDetails.className = 'workout-details';
-
-                const warmup = document.createElement('div');
-                warmup.className = 'workout-section';
-                warmup.innerHTML = `<strong>Warmup:</strong> ${slot.activity.warmup}`;
-                workoutDetails.appendChild(warmup);
-
-                const strength = document.createElement('div');
-                strength.className = 'workout-section';
-                strength.innerHTML = `<strong>Strength:</strong> ${slot.activity.strength}`;
-                workoutDetails.appendChild(strength);
-
-                const workout = document.createElement('div');
-                workout.className = 'workout-section';
-                workout.innerHTML = `<strong>Workout:</strong> ${slot.activity.workout}`;
-                workoutDetails.appendChild(workout);
-
-                activitySlot.appendChild(workoutDetails);
+                activitySlot.innerHTML = workoutDetails;
                 grid.appendChild(activitySlot);
 
                 // Instructor
@@ -367,15 +460,51 @@
                 // Occupancy
                 const occupancySlot = document.createElement('div');
                 occupancySlot.className = 'workout-slot';
-                occupancySlot.textContent = slot.occupancy;
+
+                const occupancyText = document.createElement('span');
+                occupancyText.textContent = slot.occupancy;
+
+                const signInButton = document.createElement('button');
+                const isSignedIn = signedInByDay[day].has(index);
+
+                signInButton.textContent = isSignedIn ? 'Signed In' : 'Sign In';
+                signInButton.className = isSignedIn ? 'sign-in-button grey-out' : 'sign-in-button';
+
+                // Toggle sign-in/sign-out behavior
+                signInButton.onclick = function () {
+                    let [current, max] = slot.occupancy.split('/').map(Number);
+
+                    if (signedInByDay[day].has(index)) {
+                        // Unsigned: Decrease occupancy
+                        current = Math.max(0, current - 1);
+                        slot.occupancy = `${current}/${max}`;
+                        occupancyText.textContent = slot.occupancy;
+
+                        signedInByDay[day].delete(index); // Remove from signed-in slots
+                        signInButton.textContent = 'Sign In';
+                        signInButton.classList.remove('grey-out');
+                    } else if (current < max) {
+                        // Signed: Increase occupancy
+                        current++;
+                        slot.occupancy = `${current}/${max}`;
+                        occupancyText.textContent = slot.occupancy;
+
+                        signedInByDay[day].add(index); // Add to signed-in slots
+                        signInButton.textContent = 'Signed In';
+                        signInButton.classList.add('grey-out');
+                    }
+                };
+
+                occupancySlot.appendChild(occupancyText);
+                occupancySlot.appendChild(signInButton);
                 grid.appendChild(occupancySlot);
             });
 
             scheduleDiv.appendChild(grid);
         }
-
         // Show Sunday schedule by default
         showSchedule('Sunday');
     </script>
 </body>
+
 </html>
