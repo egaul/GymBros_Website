@@ -1,90 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Join Now</title>
-        <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
-        <script defer src="join_now.js"></script>
-    </head>
-    <body>
-        <!-- large heading -->
-        <h1 class="site-heading">GymBros!</h1>
 
-        <!-- navigation bar -->
-        <div class="navbar">
-            <a href="index.html">Home</a>
-            <a href="meet_coaches.html">Meet our coaches!</a>
-            <a href="join_now.html" class="active">Join Now!</a>
-            <a href="schedule.html">Workout Schedule</a>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Now</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <script defer src="join_now.js"></script>
+</head>
 
-        <h1>Membership Types and Prices</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Membership Type</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Basic Membership</td>
-                    <td>Access to 3 classes per week</td>
-                    <td>$150/month</td>
-                </tr>
-                <tr>
-                    <td>Unlimited Membership</td>
-                    <td>Unlimited access to all classes</td>
-                    <td>$200/month</td>
-                </tr>
-                <tr>
-                    <td>Personal Training Package</td>
-                    <td>4 personal training sessions per month and Unlimited classes</td>
-                    <td>$300/month</td>
-                </tr>
-                <tr>
-                    <td>Drop-In Pass</td>
-                    <td>Access to a single class</td>
-                    <td>$25/class</td>
-                </tr>
-            </tbody>
-        </table>
+<body>
+    <!-- large heading -->
+    <h1 class="site-heading">GymBros!</h1>
 
-        <h1>Create an Account and Join Now!</h1>
-        <form id="registrationForm">
-            <label for="firstName">First name:</label>
-            <input type="text" id="firstName" name="firstName" required><br><br>
-            
-            <label for="lastName">Last name:</label>
-            <input type="text" id="lastName" name="lastName" required><br><br>
-            
-            <label for="membershipType">Membership Type:</label>
-            <select id="membershipType" name="membershipType" required>
-                <option value="" disabled selected>Select your membership type</option>
-                <option value="Basic">Basic</option>
-                <option value="Unlimited">Unlimited</option>
-                <option value="Personal Training Package">Personal Training Package</option>
-                <option value="Drop-In Pass">Drop-In Pass</option>
-            </select><br><br>
-    
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br><br>
+    <!-- navigation bar -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="meet_coaches.html">Meet our coaches!</a>
+        <a href="join_now.html" class="active">Join Now!</a>
+        <a href="schedule.html">Workout Schedule</a>
+    </div>
 
-            <p>Choose a strong password that meets the following criteria:</p>
-            <ol>
-               <li>At least 5 characters long.</li>
-               <li>Contains at least 1 digit.</li>
-               <li>No spaces.</li>
-               <li>Contains a special character.</li>
-            </ol>
-    
-            <label for="password">Create password:</label>
-            <input type="password" id="password" name="password" required><br><br>
-    
-            <input type="submit" value="Register">
-        </form>
-        <div id="message" class="message"></div>
-    </body>
+    <h1>Membership Types and Prices</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Membership Type</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Basic Membership</td>
+                <td>Access to 3 classes per week</td>
+                <td>$150/month</td>
+            </tr>
+            <tr>
+                <td>Unlimited Membership</td>
+                <td>Unlimited access to all classes</td>
+                <td>$200/month</td>
+            </tr>
+            <tr>
+                <td>Personal Training Package</td>
+                <td>4 personal training sessions per month and Unlimited classes</td>
+                <td>$300/month</td>
+            </tr>
+            <tr>
+                <td>Drop-In Pass</td>
+                <td>Access to a single class</td>
+                <td>$25/class</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>Create an Account and Join Now!</h1>
+    <form id="registrationForm">
+        <label for="firstName">First name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+
+        <label for="lastName">Last name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <label for="membershipType">Membership Type:</label>
+        <select id="membershipType" name="membershipType" required>
+            <option value="" disabled selected>Select your membership type</option>
+            <option value="Basic">Basic</option>
+            <option value="Unlimited">Unlimited</option>
+            <option value="Personal Training Package">Personal Training Package</option>
+            <option value="Drop-In Pass">Drop-In Pass</option>
+        </select><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <p>Choose a strong password that meets the following criteria:</p>
+        <ol>
+            <li>At least 5 characters long.</li>
+            <li>Contains at least 1 digit.</li>
+            <li>No spaces.</li>
+            <li>Contains a special character.</li>
+        </ol>
+
+        <label for="password">Create password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Register">
+    </form>
+    <div id="message" class="message"></div>
+</body>
 </html>
