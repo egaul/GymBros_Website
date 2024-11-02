@@ -4,11 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login to GymBros</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <script defer src="login.js"></script> <!-- Link to the JavaScript file -->
 </head>
 
 <body>
-<p>Login page under construction</p>
-</body>
+    <h1 class="site-heading" id="welcomeHeading">Welcome back to GymBros!</h1>
 
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="meet_coaches.html">Meet our coaches!</a>
+        <a href="join_now.html">Join Now!</a>
+        <a href="schedule.html">Workout Schedule</a>
+        <span id="authButton"></span> <!-- Placeholder for Login/Logout button -->
+    </div>
+
+    <h1>Login to Your Account</h1>
+    <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Login">
+        <button type="button" onclick="window.location.href='join_now.html'">Create an Account</button> <!-- Redirect to registration -->
+    </form>
+    <div id="message" class="message"></div>
+</body>
 </html>

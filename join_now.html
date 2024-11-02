@@ -11,7 +11,7 @@
 
 <body>
     <!-- large heading -->
-    <h1 class="site-heading">GymBros!</h1>
+    <h1 class="site-heading" id="welcomeHeading">Welcome back to GymBros!</h1>
 
     <!-- navigation bar -->
     <div class="navbar">
@@ -19,6 +19,7 @@
         <a href="meet_coaches.html">Meet our coaches!</a>
         <a href="join_now.html" class="active">Join Now!</a>
         <a href="schedule.html">Workout Schedule</a>
+        <span id="authButton"></span> <!-- Placeholder for Login/Logout button -->
     </div>
 
     <h1>Membership Types and Prices</h1>
@@ -86,6 +87,7 @@
         <input type="password" id="password" name="password" required><br><br>
 
         <input type="submit" value="Register">
+        <button type="button" onclick="window.location.href='login.html'">Login</button> <!-- Login button -->
     </form>
     <div id="message" class="message"></div>
 </body>

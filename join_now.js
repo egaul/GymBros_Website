@@ -11,6 +11,7 @@ document.getElementById('registrationForm').addEventListener('submit', function 
 
     // Check if the email already exists in local storage
     const existingMembers = JSON.parse(localStorage.getItem('users')) || [];
+    console.log(existingMembers); // test print
     const memberExists = existingMembers.some(user => user.email === email);
 
     if (memberExists) {
@@ -20,77 +21,53 @@ document.getElementById('registrationForm').addEventListener('submit', function 
         return;
     }
 
-    const format = /[`!@#$%^&*()_+\-=$$$${};':"\\|,.<>\/?~]/; // Special character Regex pattern
-
-    let hasSpecialChar = format.test(password);
-    let hasSpaces = /\s/.test(password);
-    let hasNumbers = /\d/.test(password);
-
-    //munipulate individual list items
-    const item = document.querySelectorAll('li');
-    // test item is array of list elements
-    console.log(item[0]); // we got it!
-
-    //if password len less than 5
-    if (password.length < 5) {
-        item[0].classList.add("error-li");//turns first list element red 
-        item[0].classList.remove("correct-li");
-        document.getElementById('message').innerHTML = 'Your password needs to be at least 5 characters long.';
-        document.getElementById('message').style.color = 'red'
-        return;
-    }
-    else {
-        item[0].classList.remove("error-li");
-        item[0].classList.add("correct-li");//turns first list element green
-        //document.getElementById('message').innerHTML = '';//clear message
-    }
-    //if password does not contain a number.
-    if (!hasNumbers) {
-        item[1].classList.add("error-li");//turns second list element red 
-        item[1].classList.remove("correct-li");
-        document.getElementById('message').innerHTML = 'Your password needs to be at least 1 number.';
-        document.getElementById('message').style.color = 'red'
-        return;
-    }
-    else {
-        item[1].classList.remove("error-li");
-        item[1].classList.add("correct-li");//turns second list element green
-        //document.getElementById('message').innerHTML = '';//clear message
-    }
-    //if password has spaces
-    if (hasSpaces) {
-        item[2].classList.add("error-li");//turns third list element red
-        item[2].classList.remove("correct-li");
-        document.getElementById('message').innerHTML = 'Your password has spaces. Stop that.';
-        document.getElementById('message').style.color = 'red'
-        return;
-    }
-    else {
-        item[2].classList.remove("error-li");
-        item[2].classList.add("correct-li");//turns third list element green
-        //document.getElementById('message').innerHTML = '';//clear message
-    }
-    //if password does not have a special character
-    if (!hasSpecialChar) {
-        item[3].classList.add("error-li");//turns fourth list element red
-        item[3].classList.remove("correct-li");
-        document.getElementById('message').innerHTML = 'Your password needs a spceial character.';
-        document.getElementById('message').style.color = 'red'
-        return;
-    }
-    else {
-        item[3].classList.remove("error-li");
-        item[3].classList.add("correct-li");//turns fourth list element green
-        //document.getElementById('message').innerHTML = '';//clear message
+    function isValidEmail(email) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
     }
 
-    // // Check if password is valid
-    // if (password.length < 5 || !hasNumbers || hasSpaces || !hasSpecialChar) {
-    //     document.getElementById('message').innerHTML = 'Your password needs to be at least 5 characters long, contain a number, no spaces, and at least one special character.';
-    //     return;
-    // } else {
-    //     console.log("Tests passed!");
-    // }
+    document.getElementById('email').addEventListener('input', function () {
+        //const email = this.value;
+        const messageDiv = document.getElementById('message');
+        if (!isValidEmail(email)) {
+            messageDiv.innerHTML = 'Please enter a valid email address.';
+            messageDiv.style.color = 'red';
+        } else {
+            messageDiv.innerHTML = '';
+        }
+    });
+
+    function validatePassword(password) {
+        const errors = [];
+        const format = /[`!@#$%^&*()_+\-=$${};':"\\|,.<>\/?~]/;
+
+        if (password.length < 5) {
+            errors.push('Your password needs to be at least 5 characters long.');
+        }
+        if (!/\d/.test(password)) {
+            errors.push('Your password needs at least 1 number.');
+        }
+        if (/\s/.test(password)) {
+            errors.push('Your password has spaces. Stop that.');
+        }
+        if (!format.test(password)) {
+            errors.push('Your password needs a special character.');
+        }
+
+        return errors;
+    }
+
+    document.getElementById('password').addEventListener('input', function () {
+        //const password = this.value;
+        const passwordErrors = validatePassword(password);
+        const messageDiv = document.getElementById('message');
+        if (passwordErrors.length > 0) {
+            messageDiv.innerHTML = passwordErrors.join('<br>');
+            messageDiv.style.color = 'red';
+        } else {
+            messageDiv.innerHTML = '';
+        }
+    });
 
     // Create a new user object
     const newMember = {
@@ -111,4 +88,27 @@ document.getElementById('registrationForm').addEventListener('submit', function 
     // After successful registration
     document.getElementById('message').innerHTML = 'Account created successfully!';
     document.getElementById('message').style.color = 'green'; // Set color to green for success
+
+    // Redirect to index.html after 3 seconds
+    setTimeout(() => {
+        window.location.href = 'index.html'; // redirect user to homepage
+    }, 2000);
 });
+
+// Check if a user is logged in and update the heading and navigation
+window.onload = function () {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const authButton = document.getElementById('authButton');
+
+    if (loggedInUser) {
+        document.getElementById('welcomeHeading').innerHTML = `GymBros, welcome ${loggedInUser}!`;
+        authButton.innerHTML = `<a href="#" onclick="logout()">Logout</button>`; // Change to Logout button
+    } else {
+        authButton.innerHTML = `<a href="login.html">Login</a>`; // Default to Login link
+    }
+};
+// Logout function to clear user data
+function logout() {
+    localStorage.removeItem('loggedInUser'); // Clear user data
+    window.location.href = 'index.html'; // Redirect to homepage
+}

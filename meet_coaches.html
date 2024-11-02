@@ -66,7 +66,7 @@
 
 <body>
     <!-- large heading -->
-    <h1 class="site-heading">GymBros!</h1>
+    <h1 class="site-heading" id="welcomeHeading">GymBros!</h1>
 
     <!-- navigation bar -->
     <div class="navbar">
@@ -74,6 +74,7 @@
         <a href="meet_coaches.html" class="active">Meet our coaches!</a>
         <a href="join_now.html">Join Now!</a>
         <a href="schedule.html">Workout Schedule</a>
+        <span id="authButton"></span> <!-- Placeholder for Login/Logout button -->
     </div>
     <div>
         <h2>Our Coaches</h2>
@@ -83,8 +84,25 @@
         <tbody id="OurCoaches"></tbody>
     </table>
 
-
     <script>
+        // Check if a user is logged in and update the heading and navigation
+        window.onload = function () {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            const authButton = document.getElementById('authButton');
+
+            if (loggedInUser) {
+                document.getElementById('welcomeHeading').innerHTML = `GymBros, welcome ${loggedInUser}!`;
+                authButton.innerHTML = `<a href="#" onclick="logout()">Logout</button>`; // Change to Logout button
+            } else {
+                authButton.innerHTML = `<a href="login.html">Login</a>`; // Default to Login link
+            }
+        };
+        // Logout function to clear user data
+        function logout() {
+            localStorage.removeItem('loggedInUser'); // Clear user data
+            window.location.href = 'index.html'; // Redirect to homepage
+        };
+
         //NOTE: Each field is using placeholders. aboutCoach is organized with initials for testing.
         const coaches = [
             {
@@ -156,9 +174,9 @@
                      `;
             }
         }
-
         listCoaches()
     </script>
 
 </body>
+
 </html>
