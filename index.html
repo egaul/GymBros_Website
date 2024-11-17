@@ -6,6 +6,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <style>
+        h1 {
+            font-size: 3em;
+            /* Increased font size for the title */
+            font-weight: bold;
+        }
+
+        section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, #ffffff, #f8f9fa);
+            border: 1px solid #dee2e6;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.1em;
+            /* Slightly larger size for paragraph text */
+            margin-bottom: 15px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+
+        .small-image {
+            max-width: 150px;
+            margin-right: 15px;
+            border-radius: 8px;
+            object-fit: cover;
+            /* Ensure the image fits within the specified dimensions */
+        }
+
+        .image-separator {
+            height: 20px;
+            background-color: #e9ecef;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+        }
+
+        .two-image-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .two-image-grid img {
+            width: calc(50% - 10px);
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+
+        .join-button {
+            display: block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 80%;
+            max-width: 250px;
+            margin: 20px auto;
+            text-align: center;
+            font-size: 1.2em;
+            background: linear-gradient(90deg, #28a745, #218838);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .join-button:hover {
+            background-color: #218838;
+        }
+
+        .mission-content,
+        .owner-content {
+            display: flex;
+            align-items: flex-start;
+            /* Align items at the start */
+            margin-bottom: 20px;
+        }
+
+        .mission-content img {
+            height: auto;
+            /* Maintain aspect ratio */
+            max-height: 300px;
+            /* Set a maximum height for the mission image */
+            width: auto;
+            /* Maintain aspect ratio */
+            object-fit: cover;
+            /* Ensure the image fits within the specified dimensions */
+            margin-left: 40px;
+            /* Increased left margin for the mission image */
+            margin-bottom: 20px;
+            /* Space below the mission image */
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+
+        .owner-content img {
+            height: auto;
+            /* Maintain aspect ratio */
+            max-height: 400px;
+            /* Adjust max height */
+            width: auto;
+            object-fit: cover;
+            /* Ensure the image fits within the specified dimensions */
+            margin-right: 40px;
+            padding-bottom: 20px;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .two-image-grid {
+                flex-direction: column;
+            }
+
+            .two-image-grid img {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -43,10 +194,25 @@
 
     <section id="mission">
         <h2>Our Mission</h2>
-        <p>At Gym Bros, our mission is to empower individuals to achieve their fitness goals through community support,
-            expert coaching, and a variety of challenging classes.</p>
-        <img src="https://progressiveperformance.com/wp-content/uploads/2020/11/CrossFit-1024x1024.png"
-            alt="Our Mission 1" />
+        <div class="mission-content">
+            <div class="text-content">
+                <p style="text-indent: 20px;">At Gym Bros, we empower individuals to achieve their fitness goals through
+                    community support and expert coaching, ensuring that everyone feels included and motivated. Our
+                    mission is to create a welcoming environment where people of all fitness levels can thrive. We
+                    believe that fitness is not just about physical strength, but also about mental resilience and
+                    emotional well-being.</p>
+                <p style="text-indent: 20px;">We foster an inclusive environment for all fitness levels, providing
+                    personalized training programs tailored to individual needs and aspirations. Our diverse classes
+                    inspire members to push their limits, discover their potential, and build lasting friendships along
+                    the way. We are committed to helping our members not only reach their goals but also enjoy the
+                    journey of self-improvement.</p>
+            </div>
+            <img src="https://progressiveperformance.com/wp-content/uploads/2020/11/CrossFit-1024x1024.png"
+                alt="Our Mission" />
+        </div>
+    </section>
+
+    <section class="two-image-grid">
         <img src="https://cdn.futura-sciences.com/buildsv6/images/wide1920/e/7/f/e7fbc23e2d_117035_crossfit.jpg"
             alt="Our Mission 2" />
         <img src="https://www.telegraph.co.uk/content/dam/investing/2016/Spark/Business-of-sport/man-doing-crossfit-rope-work-xlarge.jpg"
@@ -55,22 +221,37 @@
 
     <section id="owner">
         <h2>About the Owner</h2>
-        <p>Meet John Doe, a certified fitness trainer with over 10 years of experience in the fitness industry. His
-            passion for fitness and dedication to helping others achieve their goals is the driving force behind Gym
-            Bros.</p>
-        <img src="https://www.prnewsonline.com/wp-content/uploads/2020/06/shutterstock_256985293.jpg"
-            alt="Owner John Doe" />
+        <div class="owner-content">
+            <img class="small-image"
+                src="https://www.prnewsonline.com/wp-content/uploads/2020/06/shutterstock_256985293.jpg"
+                alt="Owner John Doe" />
+            <div class="text-content">
+                <p style="margin-top: 20px; text-indent: 20px;">Meet John Doe, a certified trainer with over 10 years of
+                    experience in the fitness industry, dedicated to helping others achieve their fitness dreams. His
+                    journey began with a passion for health and wellness, which has only grown stronger over the years.
+                    John believes that fitness is a lifelong journey, and he is committed to guiding his clients every
+                    step of the way.</p>
+                <p style="text-indent: 20px;">His passion for fitness drives Gym Bros, focusing on holistic health and
+                    wellness, ensuring a balanced approach to fitness. John creates a supportive environment where every
+                    member feels valued and empowered, fostering a sense of community. He also promotes fitness in the
+                    community through outreach programs and events, making fitness accessible to everyone, regardless of
+                    their starting point.</p>
+            </div>
+        </div>
     </section>
 
-    <section id="join">
-        <h2><a href="join_now.html" class="join-button">Join Now!</a></h2>
+    <section id="join" style="text-align: center;">
+        <h2>
+            <a href="join_now.html" class="join-button">Join Now!</a>
+        </h2>
     </section>
 
     <footer>
         <h2>Contact Us</h2>
-        <p>Phone: (123) 456-7890</p>
-        <p>Email: info@gymbros.com</p>
+        <div class="footer-info">
+            <p>Phone: (123) 456-7890</p>
+            <p>Email: info@gymbros.com</p>
+        </div>
     </footer>
 </body>
-
 </html>

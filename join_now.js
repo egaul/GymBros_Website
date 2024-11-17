@@ -80,14 +80,18 @@ document.getElementById('registrationForm').addEventListener('submit', function 
 
     // Add the new member to the existing members array
     existingMembers.push(newMember);
-    localStorage.setItem('users', JSON.stringify(existingMembers));
+    // Example of try-catch
+    try {
+        localStorage.setItem('users', JSON.stringify(existingMembers));
+    } catch (error) {
+        console.error('Error saving to localStorage', error);
+    }
 
     // Clear the form after submission
     document.getElementById('registrationForm').reset();
 
     // After successful registration
-    document.getElementById('message').innerHTML = 'Account created successfully!';
-    document.getElementById('message').style.color = 'green'; // Set color to green for success
+    alert('Account created successfully!');
 
     // Redirect to index.html after 3 seconds
     setTimeout(() => {
